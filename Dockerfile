@@ -1,21 +1,17 @@
-# Step 1: Use the correct, updated lightweight Alpine Linux desktop image tag
-FROM lscr.io/linuxserver/webtop:latest
+# Use the smallest graphical desktop available (Ubuntu Openbox)
+FROM lscr.io/linuxserver/webtop:ubuntu-openbox
 
-# Step 2: Bind the networking configuration to Render's required web port
 EXPOSE 7860
 ENV PORT=7860
 ENV SUBFOLDER=/
 
-# Step 3: Align container permissions so you have full layout control
 ENV PUID=1000
 ENV PGID=1000
 ENV TZ=Etc/UTC
 
-# HIGH-SPEED 60FPS SMOOTHNESS SETTINGS:
-# This stops lag by telling the cloud server to stream using light formats
+# TURN DOWN THE STRAIN (This forces it to stay super lightweight)
+ENV CUSTOM_RES_W=1024
+ENV CUSTOM_RES_H=768
 ENV WEBRTC_ENCODER=VP8
-ENV CUSTOM_RES_W=1280
-ENV CUSTOM_RES_H=720
 
-# Step 4: Secure workspace profile directory permissions
 RUN mkdir -p /config && chmod -R 777 /config
